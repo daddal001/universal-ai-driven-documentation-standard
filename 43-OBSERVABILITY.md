@@ -225,7 +225,7 @@ Every AI model call (Gemini, etc.) MUST log:
 | `timestamp_start` | ISO 8601 | Start of AI interaction |
 | `timestamp_end` | ISO 8601 | End of AI interaction |
 | `user_id_pseudonymized` | string | SHA-256 hash of user_id |
-| `model_id` | string | `gemini-3.1-flash-lite-preview` |
+| `model_id` | string | `gemini-2.0-flash` |
 | `model_version` | string | Exact model version |
 | `model_provider` | string | `google-vertex-ai` |
 | `input_token_count` | int | Input token count |
