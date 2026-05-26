@@ -548,12 +548,60 @@ Standard variables for documentation prompts:
 
 ---
 
+## Portfolio Writer and Verifier Agents
+
+*Added 2026-05-22 as part of the article portfolio initiative. Canonical reference for the writer-agent and verifier-agent execution model under `medium-articles/drafts/`. Architecture detail lives in [`docs/PORTFOLIO_ARCHITECTURE.md`](../PORTFOLIO_ARCHITECTURE.md).*
+
+### Writer agents
+
+A writer agent is a `general-purpose` teammate spawned into a wave team (`portfolio-wave-1`, `portfolio-wave-2`, or `portfolio-wave-3`). Its single responsibility is to produce one `outline.md` file in `medium-articles/drafts/wave-N/NN-kebab-slug/` conforming to:
+
+- The 11-section outline format defined in [`medium-articles/drafts/README.md`](../../medium-articles/drafts/README.md).
+- The voice DNA in [`medium-articles/drafts/VOICE_GUIDE.md`](../../medium-articles/drafts/VOICE_GUIDE.md) — six non-negotiables: *do not invent experience, do not invent sources, front-load the recommendation, steel-man alternatives, mark gaps visibly, write from the ADR*.
+
+**Writer constraints (enforced by the spawning prompt):**
+
+1. **Source-integrity is non-negotiable.** Every cited internal reference (ADR, file:line, commit hash, memory-file slug) must be verifiable in the repo. Anything not directly grounded gets the literal tag `[unverified — needs link check before draft]`. Writers may not invent external citations; if an external claim doesn't have a verifiable source, it must be reframed as personal experience or removed.
+2. **Anthropic-first cross-domain framing for Tier-1 outlines.** Every T1 outline must include a concrete Claude API parallel (specific Anthropic rate-limit header, specific tool_use schema, specific streaming-cancel call, specific MCP pattern, or specific caching breakpoint) *plus* at least one fintech parallel (Stripe Radar, Checkout.com, Revolut) and one HF/research parallel (alternative-data reasoning, news/sentiment, structured extraction).
+3. **Scope discipline.** A writer may only write its own outline.md file. No cross-agent edits, no edits to shared INDEX / VOICE_GUIDE / PUBLISHING files.
+4. **British English.** No corporate-speak, no fake enthusiasm, no LinkedIn brain, no emojis.
+
+### Verifier agents
+
+After all writer agents in a wave complete, 13 verifier agents are spawned into the same team. Each is an `Explore` teammate (read-only) reading every outline produced in the wave and reporting findings to a shared task list. The 13 quality dimensions:
+
+| ID | Verifier | Scope |
+|---|---|---|
+| V-1 | voice-dna-A | Voice DNA pass 1 — symptom + number opener, recommendation in first 200 words, steel-manned alternative, single closing take, British English |
+| V-2 | voice-dna-B | Voice DNA pass 2 — independent cross-check; reads outlines in reverse order; disagreements flagged for team-lead arbitration |
+| V-3 | source-internal | Internal source integrity — every cited ADR / commit / file:line / memory-file slug grep'd against the repo |
+| V-4 | source-external | External source integrity — every external URL opened and confirmed reachable; flag any AI-invented or 404'd citation |
+| V-5 | anthropic-tie-in-A | Anthropic/Claude tie-in pass 1 — concrete API parallel, not generic |
+| V-6 | anthropic-tie-in-B | Anthropic/Claude tie-in pass 2 — cross-check against Anthropic public docs; reject any pattern that doesn't exist in the actual API surface |
+| V-7 | cross-domain | Fintech + HF/research parallels named with concrete instances |
+| V-8 | falsification | Anti-hallucination — try to break the central claim; surface one counter-example, edge case, or honest limitation per outline |
+| V-9 | title-search-quality | Every working title would Google well — real technical terms, version numbers where relevant; no magazine-headline phrasing |
+| V-10 | cross-outline | Cross-outline consistency — flag contradictions, redundancies, or merge candidates |
+| V-11 | closing-take | Closing-take strength — every outline closes on a single landed take, not a recap |
+| V-12 | honesty-gaps | Limitations & honest scope — reject hand-waving like "your mileage may vary" |
+| V-13 | synthesis | Runs *after* V-1 through V-12 complete; reads all reports; produces master VERIFICATION_REPORT.md; resolves paired-verifier disagreements; generates per-outline action list |
+
+V-1 through V-12 run in parallel (single Agent-tool invocation with twelve teammates). V-13 runs sequentially after.
+
+### Promotion criteria
+
+An outline promotes from `WRITTEN` to `VERIFIED` only when V-1 through V-13 all sign off and the team lead has applied the per-outline action list from VERIFICATION_REPORT.md. Source-integrity verifiers (V-3, V-4) re-run if revisions introduced new citations.
+
+---
+
 ## Related Documents
 
 | Document | Purpose |
 |----------|---------|
 | [Document Types](./03-DOCUMENT_TYPES.md) | All document types |
 | [Quality](./05-QUALITY.md) | Quality standards |
+| [Portfolio Architecture](../PORTFOLIO_ARCHITECTURE.md) | The 109-article portfolio initiative — scope, taxonomy, agent execution model |
+| [Voice Guide](../../medium-articles/drafts/VOICE_GUIDE.md) | Canonical voice/tone spec for portfolio writer agents |
 
 ---
 
