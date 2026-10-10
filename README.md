@@ -22,9 +22,9 @@ The turning point for me was Architecture Decision Records. I started writing AD
 
 That's when I realised: good documentation isn't just for humans anymore. It's how you teach AI agents to write better code for your specific project. And the problem isn't that people are lazy about docs, it's that there's no standard for how to do it. Every team reinvents the wheel, writes docs in a different format, puts them in a different place, and six months later, nobody can find anything.
 
-This standard fixes that. 45 modular standards, pre-commit hooks that block undocumented code, CI workflows that enforce it, and templates you can copy and fill in. I've been running this on my own production repo, and it's made a noticeable difference in the quality of agent output. A few other people have tried it and found it useful too. There's still plenty to improve — new features to add, rough edges to smooth out — but the foundation works, and it's solving a real problem right now.
+This standard fixes that. 48 modular standards, pre-commit hooks that block undocumented code, CI workflows that enforce it, and templates you can copy and fill in. I've been running this on my own production repo, and it's made a noticeable difference in the quality of agent output. A few other people have tried it and found it useful too. There's still plenty to improve — new features to add, rough edges to smooth out — but the foundation works, and it's solving a real problem right now.
 
-You don't need all 45 standards. Most projects use 3–5. Start small, add what you need.
+You don't need all 48 standards. Most projects use 3–5. Start small, add what you need.
 
 ## Quick start
 
@@ -159,7 +159,7 @@ This is the part that changed how I work. When your codebase has structured cont
 
 ```
 docs/standards/
-├── 00-45*.md                  # 45 modular standards
+├── 00-47*.md                  # 48 modular standards
 ├── templates/                  # Copy-paste ready templates
 │   ├── tier-oss/              # Open source essentials
 │   ├── tier-1-system/         # Architecture, APIs, ADRs, Config, Errors
@@ -188,7 +188,7 @@ docs/standards/
 
 ## FAQ
 
-**Do I need all 45 standards?**
+**Do I need all 48 standards?**
 No. Most projects use 3–5. Start with what you need.
 
 **Does this work with my existing docs?**
